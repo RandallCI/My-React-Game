@@ -48,7 +48,17 @@ function App() {
       setObstacleLeft(GAME_WIDTH - OBSTACLE_WIDTH)
       setObstacleHeight(Math.floor(Math.random() * (GAME_HEIGHT - OBSTACLE_GAP)));
     }
-  });
+  }, [gameHasStarted, obstacleLeft]);
+
+  useEffect(() => {
+    const playerHasColidedWithTop = playerPosition >= 0 && playerPosition < obstacleHeight;
+    const playerHasCollidedWithBottom = playerPosition >= 500 && playerPosition >= 500 - bottomObstacleHeight
+
+    if (obstacleLeft >= 0 && obstacleLeft <= OBSTACLE_WIDTH && (playerHasColidedWithTop || playerHasCollidedWithBottom)) {
+      setGameHasStarted(false);
+    };
+
+  })
 
   const liftPlayer = () => {
     let newPlayerPosition = playerPosition - LIFT_HEIGHT;
