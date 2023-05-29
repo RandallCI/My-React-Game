@@ -9,7 +9,7 @@ const GAME_HEIGHT = 700;
 const GRAVITY = 9;
 const LIFT_HEIGHT = 145;
 const OBSTACLE_WIDTH = 50;
-const OBSTACLE_GAP = 150
+const OBSTACLE_GAP = 350
 
 function App() {
   //Set the player position and position the player initially.
@@ -22,7 +22,7 @@ function App() {
   const [obstacleLeft, setObstacleLeft] = useState(GAME_WIDTH - OBSTACLE_WIDTH);
   //Set the height of the obstacle at the bottom of the screen.
   const bottomObstacleHeight = GAME_HEIGHT - obstacleHeight - OBSTACLE_GAP;
-;
+  const [score, setScore] = useState(0);
   useEffect(() => {
     let timeId;
     if (gameHasStarted && playerPosition < GAME_HEIGHT - PLAYER_SIZE) {
@@ -47,6 +47,7 @@ function App() {
     } else {
       setObstacleLeft(GAME_WIDTH - OBSTACLE_WIDTH)
       setObstacleHeight(Math.floor(Math.random() * (GAME_HEIGHT - OBSTACLE_GAP)));
+      setScore((score) => score + 1);
     }
   }, [gameHasStarted, obstacleLeft]);
 
@@ -84,6 +85,7 @@ function App() {
       {/* Set th player */}
       <Player size = {PLAYER_SIZE} top = {playerPosition}/>
       </GameFrame>
+      <span>{score}</span>
     </CenteringItem>
   );
 
@@ -113,6 +115,11 @@ const CenteringItem = styled.div `
   display: flex;
   width: 100%;
   justify-content: center;
+  & span {
+    color: white;
+    font-size: 24px;
+    position: absolute;
+  }
 `;
 
 //Create the frame that surrounds the game scene.
