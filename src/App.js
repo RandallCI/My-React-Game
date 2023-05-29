@@ -58,7 +58,7 @@ function App() {
       setGameHasStarted(false);
     };
 
-  })
+  }, [playerPosition, obstacleHeight, bottomObstacleHeight, obstacleLeft])
 
   const liftPlayer = () => {
     let newPlayerPosition = playerPosition - LIFT_HEIGHT;
