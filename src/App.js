@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react';
 
 //Properties
 const PLAYER_SIZE = 50;
-const GAME_WIDTH = 750;
+const GAME_WIDTH = 875;
 const GAME_HEIGHT = 700;
 const GRAVITY = 9;
 const LIFT_HEIGHT = 145;
 const OBSTACLE_WIDTH = 50;
-const OBSTACLE_GAP = 350
+const OBSTACLE_GAP = 350;
+
 
 function App() {
   //Set the player position and position the player initially.
@@ -19,7 +20,7 @@ function App() {
   //Create the game obstacles and set their heights.
   const [obstacleHeight, setObstacleHeight] = useState(100);
   //Set the size and position of the left most starting point of the obstacle.
-  const [obstacleLeft, setObstacleLeft] = useState(GAME_WIDTH - OBSTACLE_WIDTH);
+  const [obstacleLeft, setObstacleLeft] = useState(GAME_WIDTH + OBSTACLE_WIDTH);
   //Set the height of the obstacle at the bottom of the screen.
   const bottomObstacleHeight = GAME_HEIGHT - obstacleHeight - OBSTACLE_GAP;
   const [score, setScore] = useState(0);
@@ -83,7 +84,7 @@ function App() {
       width = {OBSTACLE_WIDTH} 
       left = {obstacleLeft} />
       {/* Set th player */}
-      <Player size = {PLAYER_SIZE} top = {playerPosition}/>
+      <Player size = {PLAYER_SIZE} top = {playerPosition}><img src='Images/Alphabet_Icon1.png' alt='logo' width="100%" height="100%"/></Player>
       </GameFrame>
       <span>{score}</span>
     </CenteringItem>
@@ -103,6 +104,7 @@ export default App;
 //Create the object that navigates the scene.
 const Player = styled.div `
 position: absolute;
+margin-left: 25%;
 background-color: red;
 height: ${(props) => props.size}px;
 width: ${(props) => props.size}px;
@@ -126,7 +128,7 @@ const CenteringItem = styled.div `
 const GameFrame = styled.div `
   height: ${(props) => props.height}px;
   width: ${(props) => props.width}px;
-  background-color: blue;
+  background-color: rgb(6, 150, 300);
   overflow: hidden;
 `;
 
