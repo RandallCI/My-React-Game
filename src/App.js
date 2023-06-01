@@ -9,7 +9,6 @@ const GAME_HEIGHT = 700;
 const GRAVITY = 9;
 const LIFT_HEIGHT = 145;
 const OBSTACLE_WIDTH = 50;
-const OBSTACLE_GAP = 350;
 
 
 function App() {
@@ -91,8 +90,6 @@ function App() {
       <span>{score}</span>
     </CenteringItem>
   );
- {/* Set the top obstacle. */}
-      <Obstacle top = {0} height = {obstacleHeight} width = {OBSTACLE_WIDTH} left = {obstacleLeft} />
  
 }
 
