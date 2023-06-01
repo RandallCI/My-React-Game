@@ -18,11 +18,10 @@ function App() {
   //Set an initial start time for the game.
   const [gameHasStarted, setGameHasStarted] = useState(false);
   //Create the game obstacles and set their heights.
-  const [obstacleHeight, setObstacleHeight] = useState(100);
+  const [obstacleHeight, setObstacleHeight] = useState(0);
   //Set the size and position of the left most starting point of the obstacle.
   const [obstacleLeft, setObstacleLeft] = useState(GAME_WIDTH + OBSTACLE_WIDTH);
-  //Set the height of the obstacle at the bottom of the screen.
-  const bottomObstacleHeight = GAME_HEIGHT - obstacleHeight - OBSTACLE_GAP;
+ 
   const [score, setScore] = useState(0);
   useEffect(() => {
     let timeId;
@@ -47,20 +46,19 @@ function App() {
       };
     } else {
       setObstacleLeft(GAME_WIDTH - OBSTACLE_WIDTH)
-      setObstacleHeight(Math.floor(Math.random() * (GAME_HEIGHT - OBSTACLE_GAP)));
+      setObstacleHeight(Math.floor(Math.random() * (GAME_HEIGHT)));
       setScore((score) => score + 1);
     }
   }, [gameHasStarted, obstacleLeft]);
 
   useEffect(() => {
-    const playerHasColidedWithTop = playerPosition >= 0 && playerPosition < obstacleHeight;
-    const playerHasCollidedWithBottom = playerPosition >= 500 && playerPosition >= 500 - bottomObstacleHeight
+    const playerHasCollidedWithBottom = playerPosition >= 500 && playerPosition >= 500 - obstacleHeight
 
-    if (obstacleLeft >= 0 && obstacleLeft <= OBSTACLE_WIDTH && (playerHasColidedWithTop || playerHasCollidedWithBottom)) {
+    if (obstacleLeft >= 0 && obstacleLeft <= OBSTACLE_WIDTH && (playerHasCollidedWithBottom)) {
       setGameHasStarted(false);
     };
 
-  }, [playerPosition, obstacleHeight, bottomObstacleHeight, obstacleLeft])
+  }, [playerPosition, obstacleHeight, obstacleLeft])
 
   const liftPlayer = () => {
     let newPlayerPosition = playerPosition - LIFT_HEIGHT;
@@ -75,21 +73,26 @@ function App() {
 
   return (
     <CenteringItem className="App" onClick={liftPlayer}>
+      {/* Create the frame which contains the game activity. */}
       <GameFrame height = {GAME_HEIGHT} width = {GAME_WIDTH}>
-      {/* Set the top obstacle. */}
-      <Obstacle top = {0} height = {obstacleHeight} width = {OBSTACLE_WIDTH} left = {obstacleLeft} />
+      {/* Create a sun for the sky in the game scene. */}
+      <Sun height = {40} width = {40}></Sun>
       {/* Set the bottom obstacle. */}
-      <Obstacle top = {GAME_HEIGHT - obstacleHeight - bottomObstacleHeight} 
-      height = {bottomObstacleHeight} 
+      <Obstacle 
+      height = {obstacleHeight} 
       width = {OBSTACLE_WIDTH} 
-      left = {obstacleLeft} />
+      left = {obstacleLeft} 
+      
+      />
+      
       {/* Set th player */}
       <Player size = {PLAYER_SIZE} top = {playerPosition}><img src='Images/Alphabet_Icon1.png' alt='logo' width="100%" height="100%"/></Player>
       </GameFrame>
       <span>{score}</span>
     </CenteringItem>
   );
-
+ {/* Set the top obstacle. */}
+      <Obstacle top = {0} height = {obstacleHeight} width = {OBSTACLE_WIDTH} left = {obstacleLeft} />
  
 }
 
@@ -130,6 +133,16 @@ const GameFrame = styled.div `
   width: ${(props) => props.width}px;
   background-color: rgb(6, 150, 300);
   overflow: hidden;
+`;
+//add a sun to th game scene.
+const Sun = styled.div `
+  height: ${(props) => props.height}px;
+  width: ${(props) => props.width}px;
+  background-color: yellow;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50px;
 `;
 
 //Create the obstacles which will move across the screen.
